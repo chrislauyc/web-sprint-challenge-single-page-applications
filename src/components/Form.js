@@ -1,6 +1,6 @@
 import React from 'react';
 function Form(props){
-    const {formValues,updateFormValues} = props;
+    const {formValues,updateFormValues,isValid,errors} = props;
     const onChange =(e)=>{
         const {name,type,value,checked} = e.target;
         if(type==='checkbox'){
@@ -45,27 +45,15 @@ function Form(props){
                     Special Instructions
                     <input type='text' name='specialText' id='special-text' value={formValues.specialText} onChange={onChange}></input>
                 </label>
-                <button type='submit' id='order-button'>Order</button>
+                <button type='submit' id='order-button' disabled={!isValid}>Order</button>
+                    {isValid||!(Object.keys(errors).find((key)=>errors[key]!==''))?'':
+                        <label>
+                            Error(s):
+                            {Object.keys(errors).map((key,i)=><p key={i}>{errors[key]}</p>)}
+                        </label>
+                    }
             </form>
         </>
     );
 }
 export default Form;
-{/* <div>
-<label>
-    Original Red
-    <input type='radio' name='sauce' value='original-red'></input>
-</label>
-<label>
-    Garlic Ranch
-    <input type='radio' name='sauce' value='garlic-ranch'></input>
-</label>
-<label>
-    BBQ Sauce
-    <input type='radio' name='sauce' value='bbq-sauce'></input>
-</label>
-<label>
-    Spinach Alfredo
-    <input type='radio' name='sauce' value='spinach-alfredo'></input>
-</label>
-</div> */}
