@@ -6,5 +6,6 @@ export const schema = yup.object().shape({
     sausage:yup.boolean(),
     blackOlives:yup.boolean(),
     greenPepper:yup.boolean(),
+    glutenFree:yup.boolean(),
     specialText:yup.string()
 });

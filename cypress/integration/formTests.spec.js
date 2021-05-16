@@ -15,10 +15,10 @@ describe('Home page functionality',()=>{
         const special='special order';
         const getName=()=>cy.get('#name-input');
         const getSize=()=>cy.get('#size-dropdown');
-        const getPep=()=>cy.get('div > :nth-child(1) > input');
-        const getSausage=()=>cy.get(':nth-child(2) > input');
-        const getOlives=()=>cy.get(':nth-child(3) > input');
-        const getGreen=()=>cy.get('div > :nth-child(4) > input');
+        const getPep=()=>cy.get('#pepperoni');
+        const getSausage=()=>cy.get('#sausage');
+        const getOlives=()=>cy.get('#blackOlives');
+        const getGreen=()=>cy.get('#greenPepper');
         const getSpecial=()=>cy.get('#special-text');
         const fillForm=()=>{
             getName().type(name);
@@ -48,6 +48,7 @@ describe('Home page functionality',()=>{
         it('can submit',()=>{
             fillForm();
             submit().should('be.enabled');
+            submit().click();
         });
     });
 });
