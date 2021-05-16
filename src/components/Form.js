@@ -5,6 +5,7 @@ import {
     FormGroup,Container,Grid,Button
 } from '@material-ui/core';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 function Form(props){
     const {
         formValues,updateFormValues,isValid,errors,submitForm,networkStatus
@@ -73,7 +74,10 @@ function Form(props){
                     <StyledH3>Special Instructions</StyledH3>
                     <TextField label='Special Instructions' name='specialText' id='special-text' value={formValues.specialText} onChange={onChange}></TextField>
                 </div>
-                <Button type='submit' id='order-button' disabled={!isValid}>Order</Button>
+                <Grid container justify='space-around'>
+                    <Button component={Link} to='/' color='primary' variant='conatained'>Back</Button>
+                    <Button type='submit' id='order-button' disabled={!isValid} color='primary' variant='contained'>Order</Button>
+                </Grid>
                     {networkStatus?'':
                         <div>
                             <p>Network error, please try again later</p>
