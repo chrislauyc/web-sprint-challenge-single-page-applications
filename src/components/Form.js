@@ -1,5 +1,10 @@
 import React from 'react';
-import {TextField} from '@material-ui/core';
+import {
+    TextField,Select,MenuItem,InputLabel,FormControl,
+    makeStyles,Checkbox,FormControlLabel,FormHelperText,
+    FormGroup,Container,Grid,Button
+} from '@material-ui/core';
+import styled from 'styled-components';
 function Form(props){
     const {
         formValues,updateFormValues,isValid,errors,submitForm,networkStatus
@@ -17,69 +22,68 @@ function Form(props){
         e.preventDefault();
         submitForm();
     };
+    const useStyles = makeStyles((theme) => ({
+        formControl: {
+          margin: theme.spacing(1),
+          minWidth: 120,
+        },
+        selectEmpty: {
+          marginTop: theme.spacing(2),
+        },
+      }));
+    const classes = useStyles();
     return(
-        <>
+        <Container maxWidth='sm'>
             <form id='pizza-form' onSubmit={onSubmit}>
                 <TextField label='Name' name='name' id='name-input' value={formValues.name} onChange={onChange}></TextField>
-                <div>
-                    <h3>Crust</h3>
-                    <label>
-                        Crust Size
-                        <select name='size' id='size-dropdown' value={formValues.size} onChange={onChange}>
-                            <option value=''>Select</option>
-                            <option value='small'>Small</option>
-                            <option value='medium'>Medium</option>
-                            <option value='large'>Large</option>
-                        </select>
-                    </label>
-                    <label>
-                        Gluten Free Crust
-                        <input type='checkbox' name='glutenFree' checked={formValues.glutenFree} onChange={onChange}></input>
-                    </label>
-                </div>
+                {errors.name?<FormHelperText>{errors.name}</FormHelperText>:''}
+                <Grid container direction='column'>
+                    <StyledH3>Crust</StyledH3>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id='size-selector'>Size</InputLabel>
+                        <Select labelId='size-selector' label='Crust Size' name='size' id='size-dropdown' value={formValues.size} onChange={onChange}>
+                            <MenuItem value=''>--Select--</MenuItem>
+                            <MenuItem value='small'>Small</MenuItem>
+                            <MenuItem value='medium'>Medium</MenuItem>
+                            <MenuItem value='large'>Large</MenuItem>
+                        </Select>
+                    {errors.size?<FormHelperText>{errors.size}</FormHelperText>:''}
+                    </FormControl>
+                    <FormControlLabel label='Gluten Free Crust' control={
+                        <Checkbox name='glutenFree' checked={formValues.glutenFree} onChange={onChange}></Checkbox>
+                    }/>
+                </Grid>
 
+                <FormGroup>
+                    <StyledH3>Toppings</StyledH3>
+                    <FormControlLabel label='Pepperoni' control={
+                        <Checkbox name='pepperoni' id='pepperoni' checked={formValues.pepperoni} onChange={onChange}></Checkbox>
+                    }></FormControlLabel>
+                    <FormControlLabel label='Sausage' control={
+                        <Checkbox name='sausage' id='sausage' checked={formValues.sausage} onChange={onChange}></Checkbox>
+                    }></FormControlLabel>
+                    <FormControlLabel label='Black Olives' control={
+                        <Checkbox name='blackOlives' id='blackOlives' checked={formValues.blackOlives} onChange={onChange}></Checkbox>
+                    }></FormControlLabel>
+                    <FormControlLabel label='Green Pepper' control={
+                        <Checkbox name='greenPepper' id='greenPepper' checked={formValues.greenPepper} onChange={onChange}></Checkbox>
+                    }></FormControlLabel>
+                </FormGroup>
                 <div>
-                    <h3>Toppings</h3>
-                    <label>
-                        Pepperoni
-                        <input type='checkbox' name='pepperoni' id='pepperoni' checked={formValues.pepperoni} onChange={onChange}></input>
-                    </label>
-                    <label>
-                        Sausage
-                        <input type='checkbox' name='sausage' id='sausage' checked={formValues.sausage} onChange={onChange}></input>
-                    </label>
-                    <label>
-                        Black Olives
-                        <input type='checkbox' name='blackOlives' id='blackOlives' checked={formValues.blackOlives} onChange={onChange}></input>
-                    </label>
-                    <label>
-                        Green Pepper
-                        <input type='checkbox' name='greenPepper' id='greenPepper' checked={formValues.greenPepper} onChange={onChange}></input>
-                    </label>
+                    <StyledH3>Special Instructions</StyledH3>
+                    <TextField label='Special Instructions' name='specialText' id='special-text' value={formValues.specialText} onChange={onChange}></TextField>
                 </div>
-                <div>
-                    <h3>Special Instructions</h3>
-                    <label>
-                        Special Instructions
-                        <input type='text' name='specialText' id='special-text' value={formValues.specialText} onChange={onChange}></input>
-                    </label>
-                </div>
-                <button type='submit' id='order-button' disabled={!isValid}>Order</button>
-                    {isValid||!(Object.keys(errors).find((key)=>errors[key]!==''))?'':
-                        <div>
-                            <label>
-                                Error(s):
-                                {Object.keys(errors).map((key,i)=><p key={i}>{errors[key]}</p>)}
-                            </label>
-                        </div>
-                    }
+                <Button type='submit' id='order-button' disabled={!isValid}>Order</Button>
                     {networkStatus?'':
                         <div>
                             <p>Network error, please try again later</p>
                         </div>
                     }
             </form>
-        </>
+        </Container>
     );
 }
 export default Form;
+const StyledH3 = styled.h3`
+    text-align:center;
+`;

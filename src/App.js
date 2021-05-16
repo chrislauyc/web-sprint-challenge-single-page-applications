@@ -6,7 +6,7 @@ import Home from './components/Home';
 import Form from './components/Form';
 import Orders from './components/Orders';
 import {schema} from './validation/schema';
-
+import styled from 'styled-components';
 const initialFormValues ={
   name:'',
   size:'',
@@ -53,7 +53,7 @@ const App = () => {
   },[formValues]);
   return (
     <>
-      <h1>Lambda Eats</h1>
+      <StyledH1>Pizza</StyledH1>
       <Switch>
         <Route exact path='/'>
           <Home setIsSubmitted={setIsSubmitted}></Home>
@@ -70,3 +70,6 @@ const App = () => {
   );
 };
 export default App;
+const StyledH1 = styled.h1`
+  text-align:center;
+`;
